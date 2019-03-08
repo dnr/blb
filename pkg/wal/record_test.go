@@ -60,7 +60,7 @@ func roundTripToFile(r Record, t *testing.T) {
 		t.Fatalf("Failed to serialize record: %v", err)
 	}
 
-	f.Seek(0, os.SEEK_SET)
+	f.Seek(0, io.SeekStart)
 	outRec, err := deserializeRecord(f)
 	if err != nil {
 		t.Fatalf("Failed to deserialize record: %v", err)

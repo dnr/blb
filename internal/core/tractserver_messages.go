@@ -122,7 +122,7 @@ type PackTractSpec struct {
 	Length  int      // expected length
 }
 
-// PackTractsReq is a request to the TS to pack mulitple regular data tracts
+// PackTractsReq is a request to the TS to pack multiple regular data tracts
 // into a data chunk and store it locally, in preparation for erasure coding.
 // The length will probably be greater than the standard tract length.
 type PackTractsReq struct {

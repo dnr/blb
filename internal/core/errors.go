@@ -354,7 +354,7 @@ func IsRetriableError(err Error) bool {
 	return false
 }
 
-// FromRaftError translets Raft errors defined in raft pacakge to
+// FromRaftError translates Raft errors defined in raft package to
 // `core.Error` types to be sent over the wire.
 func FromRaftError(err error) Error {
 	switch err {

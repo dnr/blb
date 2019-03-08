@@ -6,7 +6,7 @@ package testblb
 import (
 	"context"
 	"fmt"
-	"os"
+	"io"
 
 	log "github.com/golang/glog"
 	"github.com/westerndigitalcorporation/blb/internal/core"
@@ -26,7 +26,7 @@ func (tc *TestCase) TestGCStaleTract() error {
 	}
 
 	data := makeRandom(1 * mb)
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Write(data); err != nil || n != len(data) {
 		return err
 	}
@@ -53,7 +53,7 @@ func (tc *TestCase) TestGCStaleTract() error {
 	}
 
 	// Now a write should succeed.
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	n, werr := blob.Write(data)
 	if werr != nil {
 		return werr

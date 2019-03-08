@@ -118,7 +118,7 @@ func redirectStderr(logger cluster.Logger) {
 	go io.Copy(demux, r)
 }
 
-// TestCase includes everyting that is needed to run a test of testblb.
+// TestCase includes everything that is needed to run a test of testblb.
 type TestCase struct {
 	name       string // the name of the test case.
 	clusterCfg cluster.Config
@@ -127,7 +127,6 @@ type TestCase struct {
 	c          *client.Client   // the client that will be used to interact with the cluster.
 	noRetryC   *client.Client   // a client that doesn't do retries, useful for some tests
 	capture    *captureLogger
-	err        error
 }
 
 // captureLogs allows a goroutine to capture logs from the processes and wait

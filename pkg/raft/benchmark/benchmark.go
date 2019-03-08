@@ -92,7 +92,6 @@ func (b *benchmark) Snapshot() (raft.Snapshoter, error) {
 
 func (b *benchmark) SnapshotRestore(reader io.Reader, index uint64, term uint64) {
 	log.Fatalf("SnapshotRestore is not implemented yet.")
-	return
 }
 
 func (b *benchmark) start(cmdSize, numTxns uint) {

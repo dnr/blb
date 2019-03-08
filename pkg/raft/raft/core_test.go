@@ -1670,7 +1670,7 @@ func TestCoreHandleAppEntsWithSnapshot(t *testing.T) {
 		}
 
 		ents := getAllEntries(follower.storage.log)
-		// Verify whther follower's log state is expected after processing the AppEnts request.
+		// Verify whether follower's log state is expected after processing the AppEnts request.
 		if !reflect.DeepEqual(ents, test.expectedLog) {
 			t.Log(ents, len(ents))
 			t.Log(test.expectedLog, len(test.expectedLog))
@@ -2375,7 +2375,7 @@ func TestCoreLeaderStepdownAfterRemoval(t *testing.T) {
 		t.Fatalf("expected no error get returned: %v", err)
 	}
 
-	// Should not step down before commiting the new conf.
+	// Should not step down before committing the new conf.
 	if c.state != c.leader {
 		t.Fatalf("can not step down before committing the new conf")
 	}

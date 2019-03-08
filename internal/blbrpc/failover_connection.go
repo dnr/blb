@@ -58,7 +58,7 @@ func (f *FailoverConnection) Close() {
 // error in rpcErr. rpcErr != nil iff err == core.ErrRPC, and in that case rpcErr
 // contains the detailed error from the RPC system.
 func (f *FailoverConnection) FailoverRPC(ctx context.Context, method string, req, reply interface{}) (err core.Error, rpcErr error) {
-	for _ = range f.addrs {
+	for range f.addrs {
 		rpcAddrIndex := atomic.LoadInt32(&f.next) // The index we'll use to locate server addresses for this RPC request.
 		addr := f.addrs[rpcAddrIndex]
 

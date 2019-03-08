@@ -8,7 +8,6 @@ import (
 	"context"
 	"io"
 	"math/rand"
-	"os"
 	"strings"
 	"sync"
 	"testing"
@@ -124,11 +123,11 @@ func checkRead(t *testing.T, blob *Blob, length int) []byte {
 // testWriteRead does a single write at the given length and offset, then a
 // single read, and checks that the read returns the written data.
 func testWriteRead(t *testing.T, blob *Blob, length int, off int64) {
-	blob.Seek(off, os.SEEK_SET)
+	blob.Seek(off, io.SeekStart)
 	p1 := makeData(length)
 	checkWrite(t, blob, p1)
 
-	blob.Seek(off, os.SEEK_SET)
+	blob.Seek(off, io.SeekStart)
 	p2 := checkRead(t, blob, length)
 	if !bytes.Equal(p1, p2) {
 		t.Errorf("data mismatch")
@@ -139,7 +138,7 @@ func testWriteRead(t *testing.T, blob *Blob, length int, off int64) {
 // and offset, and then a series of sequential reads, and checks that the data
 // matches.
 func testWriteReadInParts(t *testing.T, blob *Blob, length int, off int64, writeparts, readparts int) {
-	blob.Seek(off, os.SEEK_SET)
+	blob.Seek(off, io.SeekStart)
 	p1 := makeData(length)
 	p := p1[:]
 
@@ -149,7 +148,7 @@ func testWriteReadInParts(t *testing.T, blob *Blob, length int, off int64, write
 	}
 	checkWrite(t, blob, p)
 
-	blob.Seek(off, os.SEEK_SET)
+	blob.Seek(off, io.SeekStart)
 	var p2 []byte
 	for i := 0; i < readparts-1; i++ {
 		p2 = append(p2, checkRead(t, blob, length/readparts)...)
@@ -324,7 +323,7 @@ func TestSeekEnd(t *testing.T) {
 
 	checkWrite(t, blob, makeData(1000))
 
-	off, err := blob.Seek(-200, os.SEEK_END)
+	off, err := blob.Seek(-200, io.SeekEnd)
 	if err != nil {
 		t.Fatalf("error seeking: %s", err)
 	} else if off != 800 {
@@ -356,7 +355,7 @@ func TestPadding(t *testing.T) {
 	// Fill the byte slice with random bytes and use it to read the middle
 	// 1/3 of the tract. The result should be all zeros.
 	b := makeData(len)
-	blob.Seek(int64(len), os.SEEK_SET)
+	blob.Seek(int64(len), io.SeekStart)
 	if n, err := blob.Read(b); nil != err || n != len {
 		t.Fatalf("failed to read blob")
 	}
@@ -377,7 +376,7 @@ func TestHalfEmptyTract(t *testing.T) {
 
 	// Read the first half back and it should be padded with zeros.
 	exp := make([]byte, len)
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	got := checkRead(t, blob, len)
 	if 0 != bytes.Compare(exp, got) {
 		t.Fatalf("failed to read blob")
@@ -397,7 +396,7 @@ func TestHoleInTract(t *testing.T) {
 
 	// Read the middle 1/3 back and it should be padded with zeros.
 	exp := make([]byte, len)
-	blob.Seek(int64(len), os.SEEK_SET)
+	blob.Seek(int64(len), io.SeekStart)
 	got := checkRead(t, blob, len)
 	if 0 != bytes.Compare(exp, got) {
 		t.Fatalf("failed to read blob")
@@ -427,7 +426,7 @@ func TestHoleCrossTracts(t *testing.T) {
 
 	// Read the hole out and it should be padded with zeros.
 	exp := make([]byte, len*2)
-	blob.Seek(int64(len), os.SEEK_SET)
+	blob.Seek(int64(len), io.SeekStart)
 	got := checkRead(t, blob, len*2)
 	if 0 != bytes.Compare(exp, got) {
 		t.Fatalf("failed to read blob")
@@ -455,7 +454,7 @@ func TestHoleEntireTract(t *testing.T) {
 
 	// Read the middle tract and it should be padded with zeros.
 	exp := make([]byte, core.TractLength)
-	blob.Seek(core.TractLength, os.SEEK_SET)
+	blob.Seek(core.TractLength, io.SeekStart)
 	got := checkRead(t, blob, core.TractLength)
 	if 0 != bytes.Compare(exp, got) {
 		t.Fatalf("failed to read blob")
@@ -473,7 +472,7 @@ func TestShortRead(t *testing.T) {
 
 	// Try to read the entire tract out. We should get an EOF and only read
 	// what we wrote above.
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	b := make([]byte, core.TractLength)
 	n, err := blob.Read(b)
 	if len != n || io.EOF != err {

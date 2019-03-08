@@ -6,6 +6,7 @@ package testblb
 import (
 	"context"
 	"fmt"
+	"io"
 	"math/rand"
 	"os"
 
@@ -31,7 +32,7 @@ func (tc *TestCase) TestMissingTract() error {
 	}
 
 	data := makeRandom(1 * mb)
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Write(data); err != nil || n != len(data) {
 		return err
 	}

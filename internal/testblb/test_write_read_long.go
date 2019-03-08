@@ -6,8 +6,8 @@ package testblb
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"math/rand"
-	"os"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -85,7 +85,7 @@ func (tc *TestCase) writerLoop(index int, wg *sync.WaitGroup, killed *uint32, er
 		}
 
 		// Read the bytes back from the blob.
-		blob.Seek(0, os.SEEK_SET)
+		blob.Seek(0, io.SeekStart)
 		out := outbuf[:size]
 		if _, err := blob.Read(out); nil != err {
 			errCh <- fmt.Errorf("failed to read blob: %s", err)

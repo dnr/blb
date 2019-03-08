@@ -551,7 +551,7 @@ func (cli *Client) getNextRange(b []byte, offset int64, position *int) (thisB []
 }
 
 // extendTo extends the given blob, by possibly creating empty tracts, to
-// accomodate futher writes upto 'offset'.
+// accommodate further writes up to 'offset'.
 //
 // NOTE: This can be possibly used to pre-allocate empty tracts so that multiple
 // clients can write to different tracts in the same blob simultaneously w/o
@@ -1329,9 +1329,9 @@ func (cli *Client) getTracts(ctx context.Context, addr string, id core.BlobID, s
 type blobIterator struct {
 	cli           *Client
 	thisPartition core.PartitionID
+	start         core.BlobKey
 	partitions    []core.PartitionID
 	curator       string
-	start         core.BlobKey
 
 	// Conceptually, an iteration is a single "request", so we use one context throughout.
 	ctx context.Context

@@ -458,7 +458,7 @@ outer:
 
 // PutPartition puts a partition into state.
 func (t *Txn) PutPartition(partition *fb.Partition) {
-	t.put(partitionBucket, partitionID2Key(core.PartitionID(partition.Id)), fb.BuildPartition(partition), defaultFillPct)
+	t.put(partitionBucket, partitionID2Key(partition.Id), fb.BuildPartition(partition), defaultFillPct)
 }
 
 // GetPartitions returns all partitions of this curator.

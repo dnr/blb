@@ -17,10 +17,10 @@ func main() {
 
 	cli := newBlbCli()
 
-	// Catch INT and TERM singals so we can still cleanup the temp dirs when
+	// Catch INT and TERM signals so we can still cleanup the temp dirs when
 	// the process is forced to quit.
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, os.Kill, syscall.SIGTERM)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
 		// Clean up Once received an INT or TERM signal we'll do some cleanups before exit.

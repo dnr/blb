@@ -264,7 +264,7 @@ func (s *Storage) getLogEntries(beg, end uint64) (prevTerm uint64, ents []Entry,
 
 	fi, empty := s.log.FirstIndex()
 
-	// See if we can retrive all entries in range [beg, end) from the log.
+	// See if we can retrieve all entries in range [beg, end) from the log.
 
 	if empty || beg < fi {
 		// We can't, some of the entries must be compacted.
@@ -342,7 +342,7 @@ func (s *Storage) lastIndex() uint64 {
 	lastLogIndex, empty := s.log.LastIndex()
 
 	if !empty {
-		// If the log is not emtpy then for sure lastLogIndex > lastSnapIndex because
+		// If the log is not empty then for sure lastLogIndex > lastSnapIndex because
 		// snapshot is always a prefix of the log.
 		return lastLogIndex
 	}
@@ -365,7 +365,7 @@ func (s *Storage) lastIndex() uint64 {
 // The 'index'-th log entry must exist (either in a snapshot or the log proper)
 // or this function will panic.
 // If the term of the entry is found from storage proper(either in log or
-// snapshot), returns 'true' as its second arguement.
+// snapshot), returns 'true' as its second argument.
 // If the term of the entry can't be found from storage, returns 'false' as its
 // second argument. In this case the term is not known.
 func (s *Storage) term(index uint64) (term uint64, ok bool) {

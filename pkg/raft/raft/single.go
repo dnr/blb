@@ -10,7 +10,7 @@ import (
 // NewTestRaftNode creates a Raft node that can be used for unit testing the
 // applications that are built on top of Raft, not Raft itself.
 //	- It's the only node in a cluster thus no other replicas are needed.
-//	- It simulates time in a much faster pace so everyting happens much faster.
+//	- It simulates time in a much faster pace so everything happens much faster.
 //	- All of its states are volatile.
 func NewTestRaftNode(ID, clusterID string) *Raft {
 	cfg := Config{

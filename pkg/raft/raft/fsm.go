@@ -87,6 +87,6 @@ type Snapshoter interface {
 
 	// Release will be called by Raft once Raft is done(either succeed or fail)
 	// with the snapshot. Applications should release any resources that are
-	// assoicated the snapshot when this callback is called.
+	// associated the snapshot when this callback is called.
 	Release()
 }

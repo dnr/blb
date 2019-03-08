@@ -158,11 +158,11 @@ func (f *fsmLoop) handleCommits(update commitsUpdate) {
 			},
 		}
 
-		// It's not guaranteed the snapshot will be taken sucessfully for various
-		// reasons. (e.g. failed to write to disk, the snapshotLoop decideds to
+		// It's not guaranteed the snapshot will be taken successfully for various
+		// reasons. (e.g. failed to write to disk, the snapshotLoop decides to
 		// ignore the request because it's too busy, snapshot is not up-to-date at
 		// the time of trying to commit it, etc). But we update the "lastSnapIndex"
-		// anyway, it's fine to do so because if the snapshot failes to be commited
+		// anyway, it's fine to do so because if the snapshot fails to be committed
 		// then we just skip a snapshot, which will not affect the correctness.
 		f.lastSnapIndex = f.lastAppliedIndex
 	}
@@ -201,7 +201,7 @@ type metricSnapshotFileReader struct {
 func (r *metricSnapshotFileReader) Close() error {
 	err := r.SnapshotFileReader.Close()
 	if err == nil {
-		r.metricSnapRestoreDuration.Set(float64(time.Since(r.start)) / 1e9)
+		r.metricSnapRestoreDuration.Set(time.Since(r.start).Seconds())
 	}
 	return err
 }

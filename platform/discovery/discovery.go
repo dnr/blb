@@ -16,7 +16,7 @@ const (
 	// Binary is the standard port that clients interact with on services.
 	Binary = "binary"
 
-	// Wildcard may be used in the User and Service fields of Name to recieve updates
+	// Wildcard may be used in the User and Service fields of Name to receive updates
 	// from multiple services.
 	Wildcard = "*"
 )

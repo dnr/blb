@@ -41,7 +41,7 @@ type CuratorTalker interface {
 	ReportBadTS(ctx context.Context, addr string, id core.TractID, bad, op string, got core.Error, couldRecover bool) core.Error
 
 	// FixVersion asks the curator at 'addr' to check the version(s) of the provided
-	// tract.  Sent when a client attemped an I/O to the tractserver at 'bad' with the
+	// tract.  Sent when a client attempted an I/O to the tractserver at 'bad' with the
 	// tract in 'tract' but had a version mismatch error.
 	FixVersion(ctx context.Context, addr string, tract core.TractInfo, bad string) core.Error
 

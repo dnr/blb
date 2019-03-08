@@ -447,7 +447,7 @@ func (r *Raft) runNonLeader(timerC <-chan time.Time) {
 			commitTuples := make([]commitTuple, 0, len(commits))
 			for _, commit := range commits {
 				// We don't need to pair the committed entry with its corresponding pending
-				// object becasue non-leader node can't propose.
+				// object because non-leader node can't propose.
 				commitTuples = append(commitTuples, commitTuple{entry: commit})
 			}
 			// Notify the FSM loop about newly committed entries.
@@ -588,11 +588,11 @@ func (r *Raft) runLeader(timerC <-chan time.Time) {
 					commitTuples = append(commitTuples, commitTuple{entry: commit, pending: first})
 					if commit.Type == EntryNormal {
 						// It's user command. Updates the metric of commands commit latency.
-						r.metricCommitsLats.Observe(float64(now.Sub(first.(*Pending).start)) / 1e9)
+						r.metricCommitsLats.Observe(now.Sub(first.(*Pending).start).Seconds())
 					} else {
 						// It's read requests. Updates the metric of reads latency.
 						for _, p := range first.(pendingGroup) {
-							r.metricReadsLats.Observe(float64(now.Sub(p.start)) / 1e9)
+							r.metricReadsLats.Observe(now.Sub(p.start).Seconds())
 						}
 					}
 

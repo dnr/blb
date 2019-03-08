@@ -167,7 +167,7 @@ func (g *Graph) cleanup() {
 	}
 }
 
-// FixedWriteRead is an example scenario to faciliate simple load tests.
+// FixedWriteRead is an example scenario to facilitate simple load tests.
 // There is a single writer and a single reader, generating fixed number of
 // fixed-size events in each interval (1 second). The writer is active in the
 // first 1/4 of the run, while the reader is active for the rest of the time.

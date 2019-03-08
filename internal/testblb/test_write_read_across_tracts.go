@@ -6,7 +6,7 @@ package testblb
 import (
 	"bytes"
 	"fmt"
-	"os"
+	"io"
 
 	log "github.com/golang/glog"
 	client "github.com/westerndigitalcorporation/blb/client/blb"
@@ -58,7 +58,7 @@ func (tc *TestCase) TestWriteReadAcrossTracts() error {
 
 		// Write data to the blob.
 		data := makeRandom(test.n)
-		blob.Seek(int64(test.off), os.SEEK_SET)
+		blob.Seek(int64(test.off), io.SeekStart)
 		if n, err := blob.Write(data); err != nil {
 			return err
 		} else if n != len(data) {
@@ -75,7 +75,7 @@ func (tc *TestCase) TestWriteReadAcrossTracts() error {
 		}
 		wholeBlob := make([]byte, expectedLength)
 		// Read the whole blob back.
-		blob.Seek(0, os.SEEK_SET)
+		blob.Seek(0, io.SeekStart)
 		if n, err := blob.Read(wholeBlob); err != nil || n != len(wholeBlob) {
 			return fmt.Errorf("Read failed: error is %s, len is %d but expected %d", err, n, len(wholeBlob))
 		}
@@ -100,7 +100,7 @@ func (tc *TestCase) initBlob(size int) (*client.Blob, error) {
 	for i := range data {
 		data[i] = 'x'
 	}
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Write(data); err != nil || n != len(data) {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func verifyBlobData(blobData, writtenData []byte, oldSize int, off int) error {
 		return fmt.Errorf("The written data must be included in blob data")
 	}
 	// We should read it back.
-	if bytes.Compare(blobData[off:off+len(writtenData)], writtenData) != 0 {
+	if !bytes.Equal(blobData[off:off+len(writtenData)], writtenData) {
 		return fmt.Errorf("mismatch with written data")
 	}
 	// The part that belongs to original blob and haven't been modified should be

@@ -16,8 +16,7 @@ const (
 	dialTimeout = 10 * time.Second
 )
 
-// RPCMasterConnection implements MasterConnection based on Go's RPC
-// pacakge.
+// RPCMasterConnection implements MasterConnection based on Go's RPC package.
 type RPCMasterConnection struct {
 	addr string
 	fc   *blbrpc.MasterFailoverConnection

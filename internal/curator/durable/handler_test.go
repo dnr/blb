@@ -71,7 +71,7 @@ func TestGC(t *testing.T) {
 
 	tid := core.TractID{Blob: id, Index: 0}
 
-	// The blob exists but this tract does not.  We don't GC the non-existant tracts though.
+	// The blob exists but this tract does not.  We don't GC the non-existent tracts though.
 	// This is a descriptive test not a normative test -- we currently don't GC these
 	// tracts to avoid having to synchronize tract create and GC activity, but we could
 	// do that in the future.

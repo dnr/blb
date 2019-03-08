@@ -216,9 +216,6 @@ type readdirReply struct {
 	unknown []string       // Files we don't know about.
 }
 
-type closedirReply struct {
-}
-
 type statfsReply struct {
 	status core.FsStatus
 }

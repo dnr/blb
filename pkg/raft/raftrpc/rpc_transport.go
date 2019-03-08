@@ -8,7 +8,6 @@ import (
 	"context"
 	"encoding/binary"
 	"encoding/gob"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -85,8 +84,6 @@ func init() {
 	gob.Register(&raft.VoteResp{})
 	gob.Register(&raft.InstallSnapshot{})
 }
-
-var errRPCTimeout = errors.New("RPC timeout")
 
 // RPCTransport is an implementation of the Transport interface based
 // on Go RPC.

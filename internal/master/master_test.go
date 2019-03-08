@@ -22,8 +22,8 @@ func same(a []string, b []string) bool {
 	if len(a) != len(b) {
 		return false
 	}
-	sort.Sort(sort.StringSlice(a))
-	sort.Sort(sort.StringSlice(b))
+	sort.Strings(a)
+	sort.Strings(b)
 	for i := 0; i < len(a); i++ {
 		if a[i] != b[i] {
 			return false

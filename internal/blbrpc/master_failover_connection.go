@@ -100,7 +100,7 @@ func getAddrs(addrSpec string) ([]string, <-chan discovery.Update) {
 	}
 
 	// Otherwise use discovery to find them out.
-	addrChangeCh, err := discovery.DefaultClient.Watch(nil, parseDiscoverName(addrSpec))
+	addrChangeCh, err := discovery.DefaultClient.Watch(context.Background(), parseDiscoverName(addrSpec))
 	if err != nil {
 		log.Fatalf("Failed to create the discovery watcher: %s", err)
 	}

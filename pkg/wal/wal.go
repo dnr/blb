@@ -29,7 +29,7 @@ type Log interface {
 	// Appends adds the given records to the end of the log. Blocks
 	// until the records are durably written to disk.
 	// The IDs of each record must be sequential values.
-	// If Append fails, the only guarentee is that Records that were
+	// If Append fails, the only guarantee is that Records that were
 	// successfully written by previous calls to Append should still
 	// be readable.
 	Append(...Record) error

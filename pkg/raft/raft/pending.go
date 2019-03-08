@@ -19,15 +19,11 @@ type Pending struct {
 	// is stored here.
 	Res interface{}
 
-	//  Err will be set if any error occured.
+	//  Err will be set if any error occurred.
 	Err error
 
 	// Done is the channel that will be signaled when the command concludes.
 	Done chan struct{}
-
-	// index is the ID of this command used by Raft to identify a commmand.
-	// It's not exposed to users.
-	index uint64
 
 	// term is only used by ProposeIfTerm.
 	term uint64

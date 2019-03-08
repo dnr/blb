@@ -59,7 +59,7 @@ func (s *eventStats) String() string {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
-	elapsedInSec := time.Now().Sub(s.start).Seconds()
+	elapsedInSec := time.Since(s.start).Seconds()
 	sizeInMB := float64(s.byteSize) / MB
 	str := fmt.Sprintf("processed bytes: %f MB\n", sizeInMB)
 	str += fmt.Sprintf("throughput: %f MB/sec\n", sizeInMB/elapsedInSec)
@@ -176,10 +176,10 @@ func (h *LoadHandler) worker(id int, collections map[string]*blobCollection) err
 		switch e := event.(type) {
 		case readEvent:
 			off, err = h.handleRead(collections, cli, b, e)
-			h.readStat.update(off, time.Now().Sub(start))
+			h.readStat.update(off, time.Since(start))
 		case writeEvent:
 			off, err = h.handleWrite(collections, cli, b, e)
-			h.writeStat.update(off, time.Now().Sub(start))
+			h.writeStat.update(off, time.Since(start))
 		default:
 			err = fmt.Errorf("unknown event type")
 		}

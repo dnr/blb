@@ -591,7 +591,7 @@ func (s *coreLeader) commitUpTo(index uint64) {
 	if !wasCommitted && s.c.isLatestConfCommitted() {
 		// The new configuration was just committed.
 		if !s.c.inLatestConf() {
-			// The new configuration with the leader removed was just commited.
+			// The new configuration with the leader removed was just committed.
 			// Stepping down so a new leader in the new configuration can be elected.
 			log.Infof("The new configuration without the leader is committed, stepping down.")
 			s.c.changeState(s.c.follower, "")

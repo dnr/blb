@@ -6,7 +6,6 @@ package state
 import (
 	"bytes"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"reflect"
 	"testing"
@@ -44,7 +43,7 @@ func TestStateSnapshot(t *testing.T) {
 	snapTxn.Commit()
 
 	file := filepath.Join(test.TempDir(), "new_state")
-	err := ioutil.WriteFile(file, buf.Bytes(), os.FileMode(mode))
+	err := ioutil.WriteFile(file, buf.Bytes(), mode)
 	if err != nil {
 		t.Fatalf("Faled to dump state to file: %v", err)
 	}

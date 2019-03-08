@@ -114,7 +114,7 @@ type ExtendBlobCommand struct {
 	// What blob are we extending?
 	ID core.BlobID
 
-	// The tract key for the first new tract. New tracts have contigious
+	// The tract key for the first new tract. New tracts have contiguous
 	// tract keys.
 	FirstTractKey core.TractKey
 

@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"os"
 	"time"
 
 	log "github.com/golang/glog"
@@ -178,13 +177,13 @@ func (b *Blob) Stat() (core.BlobInfo, error) {
 func (b *Blob) Seek(offset int64, whence int) (int64, error) {
 	var newOffset int64
 	switch whence {
-	case os.SEEK_SET:
+	case io.SeekStart:
 		// Relative to the origin.
 		newOffset = offset
-	case os.SEEK_CUR:
+	case io.SeekCurrent:
 		// Relative to the current offset.
 		newOffset = b.offset + offset
-	case os.SEEK_END:
+	case io.SeekEnd:
 		// Relative to the end.
 		end, err := b.ByteLength()
 		if err != nil {

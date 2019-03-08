@@ -119,7 +119,7 @@ func readExistingFiles(homeDir string) ([]fileInfo, error) {
 
 	defer dir.Close()
 
-	// Read all the directory's childen in one go (0). Could be problematic
+	// Read all the directory's children in one go (0). Could be problematic
 	// for really huge logs. But with 4MB log files, even a 1000 files is
 	// 4 GB, which we shouldn't reach if we are being used well.
 	children, err := dir.Readdirnames(0)

@@ -126,3 +126,6 @@ func (g *groupKiller) Start() {
 		}
 	}
 }
+
+var _ killer = (*singleKiller)(nil)
+var _ killer = (*groupKiller)(nil)

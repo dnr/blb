@@ -188,7 +188,7 @@ func (s *State) getPartitions(query core.CuratorID) (res []core.PartitionID) {
 
 // verifyCuratorID verifies if given id is valid.
 func (s *State) verifyCuratorID(id core.CuratorID) core.Error {
-	if id <= 0 || id >= s.NextCuratorID {
+	if id == 0 || id >= s.NextCuratorID {
 		return core.ErrBadCuratorID
 	}
 	return core.NoError

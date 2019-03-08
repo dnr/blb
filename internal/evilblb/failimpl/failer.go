@@ -121,7 +121,7 @@ for disk in /disk/*; do
 done
 	`
 	log.V(1).Infof("Burning IO on host %s", host)
-	return f.runWithEvilTag(host, fmt.Sprintf(script))
+	return f.runWithEvilTag(host, script)
 }
 
 // BurnCPU executes some CPU intensive tasks on a remote machine, reducing CPU

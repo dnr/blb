@@ -296,7 +296,7 @@ func TestFSSnapshotConcurrency(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to read snapshot: %v", err)
 	}
-	if bytes.Compare(data, []byte("first hello world")) != 0 {
+	if !bytes.Equal(data, []byte("first hello world")) {
 		t.Fatalf("Expected to read the first snapshot back.")
 	}
 }

@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"os"
 
 	"github.com/westerndigitalcorporation/blb/internal/core"
 )
@@ -29,7 +28,7 @@ func (tc *TestCase) TestReadEOF() error {
 			return err
 		}
 
-		blob.Seek(0, os.SEEK_SET)
+		blob.Seek(0, io.SeekStart)
 
 		n, err := io.CopyBuffer(ioutil.Discard, blob, make([]byte, 1<<20))
 		if err != nil {

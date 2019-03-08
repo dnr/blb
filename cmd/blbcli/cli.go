@@ -748,7 +748,7 @@ func (b *blbCli) cmdRead(c *cli.Context) {
 
 	off := c.Int("offset")
 	if off != 0 {
-		blob.Seek(int64(off), os.SEEK_SET)
+		blob.Seek(int64(off), io.SeekStart)
 	}
 
 	var output io.WriteCloser = os.Stdout
@@ -799,7 +799,7 @@ func (b *blbCli) cmdWrite(c *cli.Context) {
 
 	off := c.Int("offset")
 	if off != 0 {
-		blob.Seek(int64(off), os.SEEK_SET)
+		blob.Seek(int64(off), io.SeekStart)
 	}
 
 	filename := c.String("file")
@@ -966,7 +966,7 @@ func (b *blbCli) cmdStartCluster(c *cli.Context) {
 	}
 	log.Infof("Root directory of the cluster: %s", config.RootDir)
 
-	// Log everyting to log file and terminal.
+	// Log everything to log file and terminal.
 	logFile := filepath.Join(config.RootDir, "log.txt")
 	fLogger, err := cluster.NewFileLogger(logFile)
 	if err != nil {

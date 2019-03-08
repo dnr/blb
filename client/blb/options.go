@@ -64,8 +64,8 @@ func OpenContext(ctx context.Context) openOpt { return func(o *openOptions) { o.
 type createOptions struct {
 	repl    int
 	hint    core.StorageHint
-	expires time.Time
 	pri     core.Priority
+	expires time.Time
 	ctx     context.Context
 }
 

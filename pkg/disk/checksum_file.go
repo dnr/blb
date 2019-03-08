@@ -89,11 +89,11 @@ func NewChecksumFile(path string, flags int) (*ChecksumFile, error) {
 func (f *ChecksumFile) Seek(offset int64, whence int) (int64, error) {
 	ppos := f.pos
 	switch whence {
-	case os.SEEK_SET:
+	case io.SeekStart:
 		f.pos = offset
-	case os.SEEK_CUR:
+	case io.SeekCurrent:
 		f.pos += offset
-	case os.SEEK_END:
+	case io.SeekEnd:
 		end, err := f.Size()
 		if err != nil {
 			return 0, err
@@ -348,7 +348,7 @@ func (f *ChecksumFile) change(off int64, b []byte) error {
 			panic("writeBlock was short but didn't return an error")
 		}
 
-		// We put 'n' bytes of 'b' into the block that was succesfully written, so
+		// We put 'n' bytes of 'b' into the block that was successfully written, so
 		// advance our write.
 		b = b[n:]
 		off += int64(n)

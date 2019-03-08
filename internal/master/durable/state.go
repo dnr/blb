@@ -104,12 +104,6 @@ func crc32UpdateUint64(crc uint32, val uint64) uint32 {
 	return crc32.Update(crc, crc32Table, buffer)
 }
 
-// uint32Transform does bitwise transform to 'x'. For now, it's a simple 16-bit
-// rotation.
-func uint32Transform(x uint32) uint32 {
-	return x<<16 | x>>16
-}
-
 // corrupt makes an arbitrary change to the state, for testing with failure injection.
 func (s *State) corrupt(json.RawMessage) error {
 	log.Infof("CORRUPTING STATE")

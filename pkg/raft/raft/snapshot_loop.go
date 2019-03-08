@@ -132,7 +132,7 @@ func (w *metricSnapshotFileWriter) Commit() error {
 	if err == nil {
 		// Update the metrics only after committing the snapshot successfully.
 		w.metricSnapshotSize.Set(float64(w.size))
-		w.metricSnapSaveDuration.Set(float64(time.Since(w.start)) / 1e9)
+		w.metricSnapSaveDuration.Set(time.Since(w.start).Seconds())
 	}
 	return err
 }

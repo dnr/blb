@@ -23,7 +23,6 @@ var (
 	binDir        = flag.String("bin_dir", "", "Location of binaries")
 	logOn         = flag.Bool("log", true, "Display process logs")
 	logPrefix     = flag.Bool("logprefix", true, "Include log line prefix")
-	level         = flag.String("loglevel", "INFO", "Sets log level")
 	masters       = flag.Uint("masters", 3, "Number of master replicas")
 	curators      = flag.Uint("curators", 3, "Number of curator replicas per curator group")
 	curatorGroups = flag.Uint("curator_groups", 2, "Number of curator groups")

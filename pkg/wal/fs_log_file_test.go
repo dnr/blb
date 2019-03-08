@@ -6,6 +6,7 @@ package wal
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -247,7 +248,7 @@ func TestOpenWithCorruption(t *testing.T) {
 		t.Fatalf("Failed to open %q to corrupt: %v", path, err)
 	}
 	fi, _ := f.Stat()
-	f.Seek(fi.Size()/2, os.SEEK_SET)
+	f.Seek(fi.Size()/2, io.SeekStart)
 	f.Write([]byte{0xbb})
 	f.Close()
 

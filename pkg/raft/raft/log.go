@@ -6,15 +6,10 @@ package raft
 import (
 	"encoding/binary"
 	"errors"
-	"math"
 
 	log "github.com/golang/glog"
 	"github.com/westerndigitalcorporation/blb/pkg/wal"
 )
-
-// nilSliceMarker is the length used to encode a nil slice. Makes
-// testing easier since Entries roundtrip exactly.
-const nilSliceMarker = math.MaxUint32
 
 const (
 	entryFormat1 byte = 0x80
@@ -54,7 +49,7 @@ func (l *entryLog) LastIndex() (index uint64, empty bool) {
 }
 
 func (l *entryLog) GetBound() (firstIndex, lastIndex uint64, empty bool) {
-	firstIndex, empty = l.FirstIndex()
+	firstIndex, _ = l.FirstIndex()
 	lastIndex, empty = l.LastIndex()
 	return
 }

@@ -445,17 +445,17 @@ func TestStopConcurrency(t *testing.T) {
 				if e == core.ErrDiskRemoved {
 					return // We're done, stop.
 				} else if e != core.NoError {
-					t.Fatal("got unexpected error from Open", e)
+					t.Error("got unexpected error from Open", e)
 				}
 				_, e = m.Write(BG, f, data, 0)
 				if e != core.NoError && e != core.ErrDiskRemoved {
 					// This might fail with ErrDiskRemoved.
-					t.Fatal("got unexpected error from Write", e)
+					t.Error("got unexpected error from Write", e)
 				}
 				e = m.Close(f)
 				if e != core.NoError {
 					// This shouldn't fail.
-					t.Fatal("got unexpected error from Close", e)
+					t.Error("got unexpected error from Close", e)
 				}
 			}
 		}(i)

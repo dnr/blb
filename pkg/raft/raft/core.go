@@ -209,7 +209,7 @@ func (c *core) HandleMsg(msg Msg) {
 
 		case *VoteReq:
 			// We are not sure if we can grant vote to the sender or not, so we simply
-			// set an emtpy string to "voteFor", we will update "currentTerm" first and
+			// set an empty string to "voteFor", we will update "currentTerm" first and
 			// transition to follower state and handle VoteReq message there.
 			voteFor = ""
 			leaderID = ""

@@ -6,6 +6,7 @@ package testblb
 import (
 	"context"
 	"fmt"
+	"io"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -37,7 +38,7 @@ func (tc *TestCase) TestCorruptTract() error {
 	}
 
 	data := makeRandom(1 * mb)
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Write(data); err != nil || n != len(data) {
 		return err
 	}
@@ -116,7 +117,7 @@ func (tc *TestCase) corruptTract(tract core.TractID, tsName string, offset int64
 	offset += 4 * (offset / 65532)
 
 	// Corrupt the file.
-	f.Seek(offset, os.SEEK_SET)
+	f.Seek(offset, io.SeekStart)
 	_, err = f.Write([]byte("bad data"))
 	return err
 }

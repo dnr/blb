@@ -155,7 +155,7 @@ func (c *Curator) replicateTract(id core.TractID, badIds []core.TractserverID) c
 			errorChan <- err
 		}(okHosts[i], okIds[i])
 	}
-	for _ = range okIds {
+	for range okIds {
 		if res := <-errorChan; res != core.NoError {
 			// The error will be logged in the goroutine launched above.
 			return res
@@ -179,7 +179,7 @@ func (c *Curator) replicateTract(id core.TractID, badIds []core.TractserverID) c
 			errorChan <- err
 		}(newAddrs[i], newIds[i])
 	}
-	for _ = range newAddrs {
+	for range newAddrs {
 		if res := <-errorChan; res != core.NoError {
 			// The errors are logged in the goroutine started above.
 			return res

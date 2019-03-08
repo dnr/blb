@@ -57,7 +57,7 @@ func metadataToSnapshotName(meta raft.SnapshotMetadata) string {
 
 // fsSnapshotMgr is a durable file-based implementation of Snapshot. The cached
 // metadata can never be out of sync with the on-file version because: (1) There
-// is only one writer exists, and the update of the cached metadata and committment
+// is only one writer exists, and the update of the cached metadata and commitment
 // of the snapshot file is done atomically and serialized with all other reads;
 // (2) program panics if the write ever fails.
 //
@@ -77,7 +77,7 @@ func metadataToSnapshotName(meta raft.SnapshotMetadata) string {
 //  - Access the cached metadata
 //  - Open the file corresponding to the cached metadata(might be read later).
 //
-// The steps of writing and commiting a snapshot file:
+// The steps of writing and committing a snapshot file:
 //
 //  - Create a temporary file and dump state there.
 //  - Commit(fsync file, rename, fsync directory) the file.

@@ -7,7 +7,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"os"
+	"io"
 
 	log "github.com/golang/glog"
 	client "github.com/westerndigitalcorporation/blb/client/blb"
@@ -30,16 +30,16 @@ func (tc *TestCase) TestRerepl() error {
 
 	buf := make([]byte, 1*mb)
 	data := makeRandom(1 * mb)
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Write(data); err != nil || n != len(data) {
 		return err
 	}
 
 	// Read the data once just to check.
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Read(buf); err != nil {
 		return err
-	} else if n != len(data) || bytes.Compare(buf, data) != 0 {
+	} else if n != len(data) || !bytes.Equal(buf, data) {
 		return fmt.Errorf("data mismatch")
 	}
 
@@ -64,7 +64,7 @@ func (tc *TestCase) TestRerepl() error {
 	}
 
 	// Now a write should succeed.
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	n, werr := blob.Write(buf)
 	if werr != nil {
 		return werr
@@ -82,7 +82,7 @@ func (tc *TestCase) triggerRereplRequest(tract core.TractID) error {
 	if err != nil {
 		return err
 	}
-	nrBlob.Seek(int64(tract.Index)*core.TractLength, os.SEEK_SET)
+	nrBlob.Seek(int64(tract.Index)*core.TractLength, io.SeekStart)
 	if _, err := nrBlob.Write([]byte{0}); err.Error() != core.ErrRPC.String() && err.Error() != core.ErrCorruptData.String() {
 		return fmt.Errorf("expected write to fail, got %s", err)
 	}

@@ -463,7 +463,7 @@ func (s *coreFollower) conflictIndex(ents []Entry) (confIdx uint64, anyConf bool
 		return 0, false
 	}
 	if ents[0].Index > s.c.storage.lastIndex()+1 {
-		// There's a gap bewteen last entry in follower's storage and the first entry sent
+		// There's a gap between last entry in follower's storage and the first entry sent
 		// from its leader. This is impossible.
 		log.Fatalf("bug: there's gap between last entry in follower's storage and first entry sent from leader")
 	}

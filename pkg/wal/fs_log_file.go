@@ -99,7 +99,7 @@ func openLogFileForRead(path string) (*logFile, error) {
 		lf.empty = false
 	}
 
-	if _, err = lf.f.Seek(0, os.SEEK_SET); err != nil {
+	if _, err = lf.f.Seek(0, io.SeekStart); err != nil {
 		f.Close()
 		log.Errorf("Failed to reset offset of %q: %v", path, err)
 		return nil, err
@@ -182,7 +182,7 @@ func (lf *logFile) Truncate(lastToKeep uint64) error {
 
 // seekToID seeks the file to the start of the record with the given ID
 func (lf *logFile) seekToID(id uint64) error {
-	if _, err := lf.f.Seek(0, os.SEEK_SET); err != nil {
+	if _, err := lf.f.Seek(0, io.SeekStart); err != nil {
 		log.Fatalf("Failed to seek to begining of file %q: %v", lf.f.Name(), err)
 	}
 
@@ -206,7 +206,7 @@ func (lf *logFile) seekToID(id uint64) error {
 }
 
 func (lf *logFile) getOffset() int64 {
-	n, err := lf.f.Seek(0, os.SEEK_CUR)
+	n, err := lf.f.Seek(0, io.SeekCurrent)
 	if err != nil {
 		// Should not happen, we are only seek to query position.
 		log.Fatalf("Seek to get offset on %s failed: %v", lf.f.Name(), err)
@@ -288,7 +288,7 @@ func (lf *logFile) readRecord() (r Record, err error) {
 		if err = lf.f.Truncate(offset); err != nil {
 			return
 		}
-		if _, err = lf.f.Seek(offset, os.SEEK_SET); err != nil {
+		if _, err = lf.f.Seek(offset, io.SeekStart); err != nil {
 			return
 		}
 

@@ -593,11 +593,12 @@ func (m *Manager) execute(generic request) reply {
 
 // sweepDeletedTracts finds "deleted" (renamed) tracts and deletes them for real.
 func (m *Manager) sweepDeletedTracts() {
-	for range time.Tick(m.config.SweepTractInterval) {
+	ticker := time.NewTicker(m.config.SweepTractInterval)
+	defer ticker.Stop()
+	for range ticker.C {
 		if m.isStopped() {
 			return
 		}
-
 		m.doSweep(time.Now())
 	}
 }

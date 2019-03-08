@@ -5,7 +5,7 @@ package testblb
 
 import (
 	"fmt"
-	"os"
+	"io"
 
 	log "github.com/golang/glog"
 	"github.com/westerndigitalcorporation/blb/internal/core"
@@ -14,7 +14,7 @@ import (
 // TestInterruptedRereplFixversion is similar to TestInterruptedRerepl with the
 // distinction that in a replication group of 3, we crash one host, bump the
 // version on the second (simulating the curator crashed in the middle of
-// re-replication), and only leave the third intact. Writting to the tract
+// re-replication), and only leave the third intact. Writing to the tract
 // should eventually success after all background rereplication and version
 // fixing.
 func (tc *TestCase) TestInterruptedRereplFixversion() error {
@@ -30,7 +30,7 @@ func (tc *TestCase) TestInterruptedRereplFixversion() error {
 	}
 
 	data := makeRandom(1 * mb)
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Write(data); err != nil || n != len(data) {
 		return err
 	}
@@ -63,7 +63,7 @@ func (tc *TestCase) TestInterruptedRereplFixversion() error {
 	}
 
 	// Now a write should succeed.
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	n, werr := blob.Write(data)
 	if werr != nil {
 		return werr

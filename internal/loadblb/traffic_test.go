@@ -22,7 +22,7 @@ func TestFillVerifyBytes(t *testing.T) {
 	// The results of fillBytes should be consistent.
 	fillBytes(client.BlobID(id), off, a)
 	fillBytes(client.BlobID(id), off, b)
-	if bytes.Compare(a, b) != 0 {
+	if !bytes.Equal(a, b) {
 		t.Fatalf("fillBytes computes different results")
 	}
 

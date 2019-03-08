@@ -120,8 +120,8 @@ eachDomain:
 // Pick 'num' randomly from 'pool', which represents hosts in different domains.
 // It is required that len(pool)>num.
 //
-// Each host in the entire pool has equal probability to be choosen. However, at
-// most one host from each domain should be choosen.
+// Each host in the entire pool has equal probability to be chosen. However, at
+// most one host from each domain should be chosen.
 func weightedRand(pool [][]string, num int) (ret []string) {
 	// Get the total size of the pool.
 	var total int

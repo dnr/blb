@@ -39,7 +39,7 @@ func makeAll() []Class {
 	for id, name := range core.EnumNamesStorageClass {
 		var n, m int
 		if items, err := fmt.Sscanf(name, "RS_%d_%d", &n, &m); err == nil && items == 2 {
-			out = append(out, makeRS(core.StorageClass(id), n, m))
+			out = append(out, makeRS(id, n, m))
 		}
 	}
 	return out

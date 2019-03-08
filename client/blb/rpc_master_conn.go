@@ -9,8 +9,7 @@ import (
 	"github.com/westerndigitalcorporation/blb/internal/core"
 )
 
-// RPCMasterConnection implements MasterConnection based on Go's RPC
-// pacakge.
+// RPCMasterConnection implements MasterConnection based on Go's RPC package.
 type RPCMasterConnection struct {
 	fc *blbrpc.MasterFailoverConnection
 }

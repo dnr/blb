@@ -49,11 +49,10 @@ func defaultSnapshoterFactory(state []byte) Snapshoter {
 // to be lag far behind leader thus leader might need to use its snasphot
 // to synchronize followers once a while.
 type testSnapshotFSM struct {
-	state             []byte
-	leaderCh          chan struct{}
-	isLeader          bool
-	expectedLastIndex uint64
-	rand              *rand.Rand
+	state    []byte
+	leaderCh chan struct{}
+	isLeader bool
+	rand     *rand.Rand
 
 	lock      sync.Mutex // Protects 'lastIndex'.
 	lastIndex uint64     // The last index that is included in the 'state'.
@@ -195,8 +194,8 @@ func TestRaftSnapshotPropose(t *testing.T) {
 	f2.fsm.(*testSnapshotFSM).waitLastAppliedIndex(lastIndex)
 
 	// Verify consistency of the states.
-	if bytes.Compare(leader.fsm.(*testSnapshotFSM).state, f1.fsm.(*testSnapshotFSM).state) != 0 ||
-		bytes.Compare(f2.fsm.(*testSnapshotFSM).state, f1.fsm.(*testSnapshotFSM).state) != 0 {
+	if !bytes.Equal(leader.fsm.(*testSnapshotFSM).state, f1.fsm.(*testSnapshotFSM).state) ||
+		!bytes.Equal(f2.fsm.(*testSnapshotFSM).state, f1.fsm.(*testSnapshotFSM).state) {
 		t.Fatalf("Inconsistent state detected in the end!")
 	}
 }
@@ -218,7 +217,7 @@ func TestRaftSnapshotRecovery(t *testing.T) {
 	n.Start(fsm)
 
 	fsm.waitLastAppliedIndex(10)
-	if bytes.Compare(fsm.state, []byte{1, 2, 3}) != 0 {
+	if !bytes.Equal(fsm.state, []byte{1, 2, 3}) {
 		t.Fatalf("Failed to recover to expected state.")
 	}
 }

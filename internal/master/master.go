@@ -339,9 +339,13 @@ func (m *Master) tractserverHeartbeat(id core.TractserverID, addr string, disks 
 	}}
 
 	// Compile a list of curators for the TS to beat to.
-	var ret []string
-	for _, curator := range m.curators {
-		ret = append(ret, curator.Addr)
+	if len(m.curators) == 0 {
+		return nil, core.NoError
+	}
+
+	ret := make([]string, len(m.curators))
+	for i, curator := range m.curators {
+		ret[i] = curator.Addr
 	}
 	return ret, core.NoError
 }

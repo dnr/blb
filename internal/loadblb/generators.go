@@ -20,7 +20,7 @@ import (
 // Generators are categorized into WriteGenerators and ReadGenerators
 // (abbreviated as Writers and Readers below if no further confusions).
 //
-// A writer is further initalized with a set of readers (those vertices
+// A writer is further initialized with a set of readers (those vertices
 // connected with itself in the graph) and variate for replication factor. Only
 // these readers can read the blobs created by this writer. A writer generates
 // write events, each of which defines an event involving creating a blob with a
@@ -249,7 +249,7 @@ func (c *blobCollection) put(id blb.BlobID, size int64) {
 
 // Retrieve a random blob from the most recent 'n' blobs in the collection. If
 // 'n' is non-positive or exceeds the length of the collection, treat 'n' as
-// equal to the length. If the colleciton is empty, 'ok' is flagged as false.
+// equal to the length. If the collection is empty, 'ok' is flagged as false.
 func (c *blobCollection) getRandRecent(n int) (id blb.BlobID, size int64, ok bool) {
 	c.lock.Lock()
 	defer c.lock.Unlock()

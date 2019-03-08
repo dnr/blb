@@ -6,8 +6,8 @@ package testblb
 import (
 	"context"
 	"fmt"
+	"io"
 	"math/rand"
-	"os"
 
 	log "github.com/golang/glog"
 )
@@ -28,7 +28,7 @@ func (tc *TestCase) TestCorruptLoseTract() error {
 	}
 
 	data := makeRandom(1 * mb)
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	if n, err := blob.Write(data); err != nil || n != len(data) {
 		return err
 	}
@@ -72,7 +72,7 @@ func (tc *TestCase) TestCorruptLoseTract() error {
 	}
 
 	// Now a write should succeed.
-	blob.Seek(0, os.SEEK_SET)
+	blob.Seek(0, io.SeekStart)
 	n, werr := blob.Write([]byte("spicy sichuan food"))
 	if werr != nil {
 		return werr

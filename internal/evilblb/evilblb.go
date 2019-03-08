@@ -12,9 +12,6 @@ import (
 	"github.com/westerndigitalcorporation/blb/internal/evilblb/topology"
 )
 
-// A revert action that can revert a triggered evil.
-type revertFun func() error
-
 // EvilBlb can inject predefined evils to a Blb cluster according to a
 // given configuration.
 type EvilBlb struct {

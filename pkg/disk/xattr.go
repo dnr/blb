@@ -7,7 +7,6 @@ package disk
 
 import (
 	"fmt"
-	"strings"
 	"syscall"
 	"unsafe"
 )
@@ -37,12 +36,6 @@ func newXattrError(op string, fd uintptr, name string, err error) *XattrError {
 		Name: name,
 		Err:  err,
 	}
-}
-
-// convertCStrings converts a set of NULL-terminated UTF-8 strings to a set of
-// go strings.
-func convertCStrings(cstrings []byte) []string {
-	return strings.FieldsFunc(string(cstrings), func(c rune) bool { return 0 == c })
 }
 
 // Fgetxattr gets an extended attribute value.
@@ -94,14 +87,6 @@ func Fsetxattr(fd uintptr, name string, value []byte) error {
 //
 // Helper.
 //
-
-// Remove the namespace prefix from xattr names.
-func cleanNamespace(in []string) (out []string) {
-	for _, s := range in {
-		out = append(out, strings.TrimPrefix(s, xattrNamespace))
-	}
-	return
-}
 
 //
 // Internal syscall implementation. We don't use things like syscall.Getxattr
